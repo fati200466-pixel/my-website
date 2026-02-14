@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>منصة اختبار</title>
+<style>
+body {
+    font-family: Arial;
+    text-align: center;
+    background: #f4f4f4;
+}
+.container {
+    background: white;
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ccc;
+}
+button {
+    padding: 8px 15px;
+    margin: 10px;
+    border: none;
+    background: #222;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2 id="question">السؤال هنا</h2>
+    <div id="answers"></div>
+    <button onclick="prevQuestion()">السابق</button>
+    <button onclick="nextQuestion()">التالي</button>
+    <br>
+    <button onclick="submitQuiz()">إرسال</button>
+</div>
+
+<script>
+const quiz = [
+    {
+        question: "كم ناتج 2 + 2 ؟",
+        answers: ["3", "4", "5"],
+        correct: 1
+    },
+    {
+        question: "عاصمة السعودية؟",
+        answers: ["جدة", "الرياض", "مكة"],
+        correct: 1
+    }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion() {
+    document.getElementById("question").innerText = quiz[currentQuestion].question;
+    let answersDiv = document.getElementById("answers");
+    answersDiv.innerHTML = "";
+    quiz[currentQuestion].answers.forEach((ans, index) => {
+        answersDiv.innerHTML += `<button onclick="checkAnswer(${index})">${ans}</button><br>`;
+    });
+}
+
+function checkAnswer(index) {
+    if(index === quiz[currentQuestion].correct){
+        score++;
+        alert("إجابة صحيحة 🎉");
+    } else {
+        alert("خطأ ❌");
+    }
+}
+
+function nextQuestion(){
+    if(currentQuestion < quiz.length - 1){
+        currentQuestion++;
+        loadQuestion();
+    }
+}
+
+function prevQuestion(){
+    if(currentQuestion > 0){
+        currentQuestion--;
+        loadQuestion();
